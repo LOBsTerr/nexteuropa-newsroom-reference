@@ -1,0 +1,5 @@
+name = Nexteuropa Free View Modes
+description = A module that lets you customize the full node and teqaser view mode without affecting features
+core = 7.x
+package = NextEuropa
+dependencies[] = nexteuropa_newsroom

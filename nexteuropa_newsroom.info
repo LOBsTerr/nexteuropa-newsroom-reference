@@ -9,6 +9,7 @@ dependencies[] = feeds
 dependencies[] = feeds_tamper
 dependencies[] = feeds_xpathparser
 dependencies[] = i18n_taxonomy
+dependencies[] = nexteuropa_free_view_modes
 configure = admin/config/content/newsroom
 features[context][] = newsroom
 features[context][] = newsroom_item
