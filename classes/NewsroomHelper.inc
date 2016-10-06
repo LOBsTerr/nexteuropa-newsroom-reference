@@ -105,16 +105,20 @@ class NewsroomHelper {
     if (!empty($url)) {
       $config['FeedsHTTPFetcher']['source'] = $url;
       $source->setConfig($config);
-    }
-
-    $source->import();
-
-    if (!empty($url)) {
-      // Restore the default URL in order to run importers manually or via cron.
-      $config['FeedsHTTPFetcher']['source'] = NewsroomHelper::getImporterUrl($importer_id);
-      $source->setConfig($config);
       $source->save();
     }
+
+    $operations[] = array('feeds_batch', array('import', $importer_id, 0));
+
+    $batch = array(
+      'title' => t('Importing Newsroom content'),
+      'operations' => $operations,
+      'progress_message' => t('Current: @current | Remaining:
+        @remaining | Total: @total | Percentage: @percentage | Estimate:
+        @estimate | Elapsed: @elapsed'),
+    );
+
+    batch_set($batch);
   }
 
   /**
