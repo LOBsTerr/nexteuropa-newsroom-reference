@@ -24,6 +24,7 @@ features[features_api][] = api:2
 features[feeds_importer][] = newsroom_deleted_items
 features[feeds_importer][] = newsroom_unpublished_items
 features[feeds_tamper][] = newsroom_unpublished_items-blank_source_1-unpublish_node
+<?php if(isset($buh)) {
 features[field_base][] = field_newsroom_associated_select
 features[field_base][] = field_newsroom_associated_topic
 features[field_base][] = field_newsroom_author

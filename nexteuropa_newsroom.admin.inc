@@ -77,6 +77,50 @@ function nexteuropa_newsroom_admin_settings($form, &$form_state) {
     '#element_validate' => array('_nexteuropa_newsroom_admin_subsite_validate'),
   );
 
+  $form['newsroom_others']['newsroom_use_newsroom_entities'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Use the entities bundled with this feature'),
+    '#default_value' => variable_get('newsroom_use_newsroom_entities', 0),
+  );
+
+  $form['newsroom_others']['custom_entities'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Custom entities'),
+    '#states' => array(
+      'visible' => array(
+        ':input[name="newsroom_use_newsroom_entities"]' => array('checked' => FALSE),
+      ),
+    ),
+  );
+
+  $form['newsroom_others']['custom_entities']['newsroom_custom_ct'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Name of your custom content type'),
+    '#description' => t('We need to know which content type you want to save the newsroom items into.'),
+    '#default_value' => variable_get('newsroom_custom_ct'),
+  );
+
+  $form['newsroom_others']['custom_entities']['newsroom_custom_service_voc'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Name of your custom vocabulary for services'),
+    '#description' => t('We need to know which vocabulary you want to use for newsroom services.'),
+    '#default_value' => variable_get('newsroom_custom_service_voc'),
+  );
+
+  $form['newsroom_others']['custom_entities']['newsroom_custom_type_voc'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Name of your custom vocabulary for types'),
+    '#description' => t('We need to know which vocabulary you want to use for newsroom types.'),
+    '#default_value' => variable_get('newsroom_custom_type_voc'),
+  );
+
+  $form['newsroom_others']['custom_entities']['newsroom_custom_topic_voc'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Name of your custom vocabulary for topics'),
+    '#description' => t('We need to know which vocabulary you want to use for newsroom topics'),
+    '#default_value' => variable_get('newsroom_custom_type_voc'),
+  );
+
   $form['newsroom_others']['newsroom_use_css'] = array(
     '#type' => 'checkbox',
     '#title' => t('Use the stylesheets provided by this feature'),

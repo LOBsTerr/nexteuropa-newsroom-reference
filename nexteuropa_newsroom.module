@@ -913,7 +913,63 @@ function nexteuropa_newsroom_feeds_processor_targets_alter(&$targets, $entity_ty
  */
 function nexteuropa_newsroom_field_default_field_instances_alter(&$fields) {
   // Add the teaser and full view mode to the display key, if they exists.
-  $fields = _nexteuropa_newsroom_get_real_modes($fields);
+  $use_our_own = variable_get('newsroom_use_newsroom_entities', 0);
+
+  if (!$use_our_own) {
+    $fields = array();
+  }
+  else {
+    $fields = _nexteuropa_newsroom_get_real_modes($fields);
+  }
+}
+
+/**
+ * Implements hook_field_default_field_base_alter().
+ */
+function nexteuropa_newsroom_field_default_field_bases_alter(&$fields) {
+  $use_our_own = variable_get('newsroom_use_newsroom_entities', 0);
+  
+  if (!$use_our_own) {
+    $fields = array();
+  }
+}
+
+/**
+ * Implements hook_fieldgroup_default_groups_alter().
+ */
+function nexteuropa_newsroom_fieldgroup_default_groups_alter(&$groups) {
+  $use_our_own = variable_get('newsroom_use_newsroom_entities', 0);
+  
+  if (!$use_our_own) {
+    $groups = array();
+  }
+}
+
+/**
+ * Implements hook_taxonomy_default_vocabularies_alter().
+ */
+function nexteuropa_newsroom_taxonomy_default_vocabularies_alter(&$vocabularies) {
+  $use_our_own = variable_get('newsroom_use_newsroom_entities', 0);
+  
+  if (!$use_our_own) {
+    $vocabularies = array();
+  }
+}
+
+/**
+ * Implements hook_node_info_alter().
+ */
+function nexteuropa_newsroom_node_info_alter(&$info) {
+  $newsroom_ct = ['newsroom_item', 'newsroom_selection', 'newsroom_newsletter_issue'];
+  $use_our_own = variable_get('newsroom_use_newsroom_entities', 0);
+  
+  if (!$use_our_own) {
+    foreach ($newsroom_ct as $ct) {
+      if (isset($info[$ct])) {
+        unset($info[$ct]);
+      }
+    }
+  }
 }
 
 /**

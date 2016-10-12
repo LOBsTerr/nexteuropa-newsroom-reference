@@ -467,6 +467,7 @@ class NewsroomHelper {
     $type_options = NewsroomHelper::getTaxonomyTermOptions(NewsroomHelper::getNewsroomTypes());
     if ($events_only) {
       $events_types = NewsroomHelper::getEventsTermsIds();
+      kpr($events_types);
       // Filter out non events type.
       foreach ($type_options as $key => $type_item) {
         if (!in_array($key, $events_types)) {
