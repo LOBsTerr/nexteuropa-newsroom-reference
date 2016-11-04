@@ -45,11 +45,11 @@ function nexteuropa_newsroom_admin_settings($form, &$form_state) {
   $form['universe_id']['newsroom_universe_id'] = array(
     '#type' => 'textfield',
     '#title' => t('Universe ID value'),
-    '#required' => TRUE,
+    '#required' => FALSE,
     '#disabled' => $universe_id_info['disabled'],
     '#description' => $universe_id_info['description'],
     '#default_value' => $newsroom_universe_id,
-    '#element_validate' => array('_nexteuropa_newsroom_admin_universe_id_validate'),
+    //'#element_validate' => array('_nexteuropa_newsroom_admin_universe_id_validate'),
   );
 
   // Other settings for the newsroom.
@@ -341,6 +341,7 @@ function nexteuropa_newsroom_admin_settings($form, &$form_state) {
     '#collapsible' => TRUE,
     '#collapsed' => TRUE,
   );
+
   $form['newsroom_pages']['newsroom_newsletter_privacy'] = array(
     '#type' => 'textarea',
     '#title' => t('Privacy statement'),
@@ -520,6 +521,25 @@ function _nexteuropa_newsroom_admin_settings_form_submit($form, &$form_state) {
     }
   }
 
+  $file = drupal_get_path('module', 'nexteuropa_newsroom') . '/nexteuropa_newsroom.info';
+  $content = file_get_contents($file);
+
+  if (!empty($form_state['values']['newsroom_use_newsroom_entities'])) { 
+    $content = preg_replace(['/^;features\[/', '/^;features\[/'], ['features[', 'features['], $content);
+    $message = t("We couldn't rewrite your info file, you have to manually edit the file in order to remove comments");
+  }
+  else {
+    $content = preg_replace(['/^features\[/', '/^features\[/'], [';features[', ';features['], $content);
+    $message = t("We couldn't rewrite your info file, you have to manually edit the file in order to add comments");
+  }
+  if (is_writable($file)) { 
+    file_put_contents($file, $content);
+    features_revert_module(array('nexteuropa_newsroom'));
+  }
+  else {
+    form_set_error('newsroom_use_newsroom_entities', $message);
+  }
+ 
   $patterns ? variable_set('newsroom_patterns', 1) : variable_set('newsroom_patterns', 0);
 
   // Create default importers if new Newsroom Universe ID detected.

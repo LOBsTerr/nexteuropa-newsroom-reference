@@ -621,8 +621,9 @@ class NewsroomHelper {
   public static function getNewsroomTypes() {
     $data = &drupal_static(__FUNCTION__);
     if (!isset($data)) {
-      $vocabulary = NewsroomHelper::getNewsroomTypeVocabulary();
-      $data = NewsroomHelper::getNewsroomTaxonomyTerms($vocabulary->vid);
+      if ($vocabulary = NewsroomHelper::getNewsroomTypeVocabulary()) {
+        $data = NewsroomHelper::getNewsroomTaxonomyTerms($vocabulary->vid);
+      }
     }
     return $data;
   }
