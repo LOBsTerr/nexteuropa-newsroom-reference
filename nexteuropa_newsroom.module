@@ -973,6 +973,15 @@ function nexteuropa_newsroom_node_info_alter(&$info) {
 }
 
 /**
+ * Implements hook_views_default_views_alter().
+ */
+function nexteuropa_newsroom_views_default_views_alter(&$views) {
+  if (!variable_get('newsroom_use_newsroom_entities', 0)) {
+    $views = array();
+  }
+}
+
+/**
  * Callback for the unique_callbacks specified in hook_feed_processor_targets().
  *
  * @param FeedsSource $source

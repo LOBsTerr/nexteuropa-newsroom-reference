@@ -77,6 +77,12 @@ function nexteuropa_newsroom_admin_settings($form, &$form_state) {
     '#element_validate' => array('_nexteuropa_newsroom_admin_subsite_validate'),
   );
 
+  $form['newsroom_others']['newsroom_use_newsroom_screens'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Use the views and the context bundled with this feature'),
+    '#default_value' => variable_get('newsroom_use_newsroom_screens', 0),
+  );
+
   $form['newsroom_others']['newsroom_use_newsroom_entities'] = array(
     '#type' => 'checkbox',
     '#title' => t('Use the entities bundled with this feature'),
@@ -305,6 +311,7 @@ function nexteuropa_newsroom_admin_settings($form, &$form_state) {
     '#title' => t('Type import script name'),
     '#default_value' => variable_get('newsroom_type_import_script', NEXTEUROPA_NEWSROOM_TYPE_SCRIPT),
   );
+
   $form['newsroom_universe']['newsroom_single_type_import_segment'] = array(
     '#type' => 'textfield',
     '#title' => t('URL chunk for single type import'),
@@ -347,7 +354,6 @@ function nexteuropa_newsroom_admin_settings($form, &$form_state) {
     '#title' => t('Privacy statement'),
     '#default_value' => variable_get('newsroom_newsletter_privacy'),
   );
-
   // Settings about the newsroom blocks.
   $form['newsroom_blocks'] = array(
     '#type' => 'fieldset',
@@ -525,16 +531,24 @@ function _nexteuropa_newsroom_admin_settings_form_submit($form, &$form_state) {
   $content = file_get_contents($file);
 
   if (!empty($form_state['values']['newsroom_use_newsroom_entities'])) { 
-    $content = preg_replace(['/^;features\[/', '/^;features\[/'], ['features[', 'features['], $content);
+    $content = preg_replace('/;features\[(?!views)/', 'features[', $content);
+        dd($content);
     $message = t("We couldn't rewrite your info file, you have to manually edit the file in order to remove comments");
   }
   else {
-    $content = preg_replace(['/^features\[/', '/^features\[/'], [';features[', ';features['], $content);
+    $content = preg_replace('/^features\[(?!views)/', ';features[', $content);
     $message = t("We couldn't rewrite your info file, you have to manually edit the file in order to add comments");
   }
-  if (is_writable($file)) { 
-    file_put_contents($file, $content);
-    features_revert_module(array('nexteuropa_newsroom'));
+  if (is_writable($file)) {
+    if (!empty($content)) {
+      file_put_contents($file, $content);
+      features_revert_module(array('nexteuropa_newsroom'));
+      drupal_set_message(t('Your info file has been adapted following your decisions.'), 'status');
+    }
+    else {
+      $message = t("It seems there was a problem editing your info file, we didn't change it");
+      form_set_error('newsroom_use_newsroom_entities', $message);
+    }
   }
   else {
     form_set_error('newsroom_use_newsroom_entities', $message);
