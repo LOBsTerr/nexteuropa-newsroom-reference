@@ -531,14 +531,21 @@ function _nexteuropa_newsroom_admin_settings_form_submit($form, &$form_state) {
   $content = file_get_contents($file);
 
   if (!empty($form_state['values']['newsroom_use_newsroom_entities'])) { 
-    $content = preg_replace('/;features\[(?!views)/', 'features[', $content);
-        dd($content);
+    $content = preg_replace('/;features\[(?!views|context)/', 'features[', $content);
     $message = t("We couldn't rewrite your info file, you have to manually edit the file in order to remove comments");
   }
   else {
-    $content = preg_replace('/^features\[(?!views)/', ';features[', $content);
+    $content = preg_replace('/(?<!;)features\[(?!views|context)/', ';features[', $content);
     $message = t("We couldn't rewrite your info file, you have to manually edit the file in order to add comments");
   }
+  if (!empty($form_state['values']['newsroom_use_newsroom_screens'])) { 
+    $content = preg_replace('/;features\[(views|context)/', 'features[', $content);
+    $message = t("We couldn't rewrite your info file, you have to manually edit the file in order to remove comments");
+  }
+  else {
+    $content = preg_replace('/(?<!;)features\[(views|context)/', ';features[', $content);
+    $message = t("We couldn't rewrite your info file, you have to manually edit the file in order to add comments");
+  } 
   if (is_writable($file)) {
     if (!empty($content)) {
       file_put_contents($file, $content);
