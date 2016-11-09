@@ -539,11 +539,11 @@ function _nexteuropa_newsroom_admin_settings_form_submit($form, &$form_state) {
     $message = t("We couldn't rewrite your info file, you have to manually edit the file in order to add comments");
   }
   if (!empty($form_state['values']['newsroom_use_newsroom_screens'])) { 
-    $content = preg_replace('/;features\[(views|context)/', 'features[', $content);
+    $content = preg_replace('/;features\[(?=views|context)/', 'features[', $content);
     $message = t("We couldn't rewrite your info file, you have to manually edit the file in order to remove comments");
   }
   else {
-    $content = preg_replace('/(?<!;)features\[(views|context)/', ';features[', $content);
+    $content = preg_replace('/(?<!;)features\[(?=views|context)/', ';features[', $content);
     $message = t("We couldn't rewrite your info file, you have to manually edit the file in order to add comments");
   } 
   if (is_writable($file)) {
