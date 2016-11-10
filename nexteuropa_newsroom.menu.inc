@@ -18,6 +18,14 @@ function nexteuropa_newsroom_menu() {
     'access arguments' => array('administer newsroom settings'),
     'file' => 'nexteuropa_newsroom.admin.inc',
   );
+  $items['admin/config/content/newsroom/%/mapping'] = array(
+    'title' => 'Newsroom',
+    'description' => 'Map your custom entities',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('nexteuropa_newsroom_wizard'),
+    'access arguments' => array('administer newsroom settings'),
+    'file' => 'nexteuropa_newsroom.wizard.inc',
+  );
   $items['news-redirect'] = array(
     'title' => 'Newsroom Item Redirect',
     'page callback' => '_nexteuropa_newsroom_item_redirect',

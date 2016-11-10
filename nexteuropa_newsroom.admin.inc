@@ -49,7 +49,7 @@ function nexteuropa_newsroom_admin_settings($form, &$form_state) {
     '#disabled' => $universe_id_info['disabled'],
     '#description' => $universe_id_info['description'],
     '#default_value' => $newsroom_universe_id,
-    //'#element_validate' => array('_nexteuropa_newsroom_admin_universe_id_validate'),
+    '#element_validate' => array('_nexteuropa_newsroom_admin_universe_id_validate'),
   );
 
   // Other settings for the newsroom.
@@ -125,6 +125,13 @@ function nexteuropa_newsroom_admin_settings($form, &$form_state) {
     '#title' => t('Name of your custom vocabulary for topics'),
     '#description' => t('We need to know which vocabulary you want to use for newsroom topics'),
     '#default_value' => variable_get('newsroom_custom_type_voc'),
+  );
+
+  $form['newsroom_others']['custom_entities']['newsroom_custom_field_unique'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Unique identifier field'),
+    '#description' => t('Write the machine name of the field you are using as unique identifier for your items'),
+    '#default_value' => variable_get('newsroom_custom_field_unique', ''),
   );
 
   $form['newsroom_others']['newsroom_use_css'] = array(
@@ -519,7 +526,11 @@ function _nexteuropa_newsroom_admin_settings_form_submit($form, &$form_state) {
   $patterns = isset($form_state['values']['patterns']) && $form_state['values']['patterns'] == 1 ? TRUE : FALSE;
   $keys = array_keys($form_state['values']);
   $rootpaths = preg_grep('/rootpath/', $keys);
-  // Shouldn't be needed, it is a setting form.
+  $use_entities_new = $form_state['values']['newsroom_use_newsroom_entities'];
+  $use_entities_old = $form['newsroom_others']['newsroom_use_newsroom_entities']['#default_value'];
+  $use_screens_new = $form_state['values']['newsroom_use_newsroom_screens'];
+  $use_screens_old = $form['newsroom_others']['newsroom_use_newsroom_screens']['#default_value'];
+
   if (!empty($rootpaths)) {
     foreach ($rootpaths as $type) {
       $typename = str_replace('_rootpath', '', $type);
@@ -527,44 +538,14 @@ function _nexteuropa_newsroom_admin_settings_form_submit($form, &$form_state) {
     }
   }
 
-  $file = drupal_get_path('module', 'nexteuropa_newsroom') . '/nexteuropa_newsroom.info';
-  $content = file_get_contents($file);
+  if ($use_entities_new != $use_entities_old) {
+    _nexteuropa_newsroom_edit_info_file($use_entities_new, $use_screens_new);
+  }
 
-  if (!empty($form_state['values']['newsroom_use_newsroom_entities'])) { 
-    $content = preg_replace('/;features\[(?!views|context)/', 'features[', $content);
-    $message = t("We couldn't rewrite your info file, you have to manually edit the file in order to remove comments");
-  }
-  else {
-    $content = preg_replace('/(?<!;)features\[(?!views|context)/', ';features[', $content);
-    $message = t("We couldn't rewrite your info file, you have to manually edit the file in order to add comments");
-  }
-  if (!empty($form_state['values']['newsroom_use_newsroom_screens'])) { 
-    $content = preg_replace('/;features\[(?=views|context)/', 'features[', $content);
-    $message = t("We couldn't rewrite your info file, you have to manually edit the file in order to remove comments");
-  }
-  else {
-    $content = preg_replace('/(?<!;)features\[(?=views|context)/', ';features[', $content);
-    $message = t("We couldn't rewrite your info file, you have to manually edit the file in order to add comments");
-  } 
-  if (is_writable($file)) {
-    if (!empty($content)) {
-      file_put_contents($file, $content);
-      features_revert_module(array('nexteuropa_newsroom'));
-      drupal_set_message(t('Your info file has been adapted following your decisions.'), 'status');
-    }
-    else {
-      $message = t("It seems there was a problem editing your info file, we didn't change it");
-      form_set_error('newsroom_use_newsroom_entities', $message);
-    }
-  }
-  else {
-    form_set_error('newsroom_use_newsroom_entities', $message);
-  }
- 
   $patterns ? variable_set('newsroom_patterns', 1) : variable_set('newsroom_patterns', 0);
 
   // Create default importers if new Newsroom Universe ID detected.
-  if ($form_state['values']['newsroom_universe_id']) {
+  if ($form_state['values']['newsroom_universe_id'] && !variable_get('newsroom_universe_id')) {
     variable_set('newsroom_universe_id', $form_state['values']['newsroom_universe_id']);
 
     $importers = array(
@@ -986,7 +967,7 @@ function _nexteuropa_newsroom_admin_rebuild_importers() {
   );
 
   foreach ($importers as $importer) {
-    // WE drop all tampers for the current importer.
+    // We drop all the tampers belonging to the current importer.
     db_delete('feeds_tamper')
       ->condition('importer', $importer)
       ->execute();
