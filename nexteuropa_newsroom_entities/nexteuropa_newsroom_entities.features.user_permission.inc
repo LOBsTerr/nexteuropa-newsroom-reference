@@ -2,13 +2,13 @@
 
 /**
  * @file
- * nexteuropa_newsroom.features.user_permission.inc
+ * Nexteuropa_newsroom.features.user_permission.inc.
  */
 
 /**
  * Implements hook_user_default_permissions().
  */
-function nexteuropa_newsroom_user_default_permissions() {
+function nexteuropa_newsroom_entities_user_default_permissions() {
   $permissions = array();
 
   // Exported permission: 'administer newsroom advanced settings'.

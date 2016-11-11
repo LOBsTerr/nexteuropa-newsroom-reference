@@ -1,0 +1,10 @@
+name = Nexteuropa Newsroom SCreens
+description = Screens for the nexteuropa_newsroom feature.
+core = 7.x
+package = NextEuropa
+features[ctools][] = context:context:3
+features[ctools][] = views:views_default:3.0
+features[views_view][] = newsletter_subscription
+features[views_view][] = newsroom_calendar_navigation
+features[views_view][] = newsroom_services
+multisite_version = 2.2

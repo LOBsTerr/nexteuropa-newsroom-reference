@@ -8,7 +8,7 @@
 /**
  * Implements hook_block_info().
  */
-function nexteuropa_newsroom_block_info() {
+function nexteuropa_newsroom_screens_block_info() {
   $blocks = [];
   $blocks['newsroom_summary_blocks'] = [
     'info' => t('Newsroom summary blocks'),
@@ -40,7 +40,7 @@ function nexteuropa_newsroom_block_info() {
 /**
  * Implements hook_block_view().
  */
-function nexteuropa_newsroom_block_view($delta = '') {
+function nexteuropa_newsroom_screens_block_view($delta = '') {
   switch ($delta) {
     case 'newsroom_summary_blocks':
       $block['subject'] = l(t('Newsroom'), NewsroomHelper::getNewsroomPageUrl([NEXTEUROPA_NEWSROOM_ALL]));
@@ -54,22 +54,22 @@ function nexteuropa_newsroom_block_view($delta = '') {
 
     case 'newsroom_admin_tools':
       $block['subject'] = NULL;
-      $block['content'] = _nexteuropa_newsroom_tools();
+      $block['content'] = _nexteuropa_newsroom_screens_tools();
       break;
 
     case 'newsroom_newsletter_subscription':
       $block['subject'] = NULL;
-      $block['content'] = _nexteuropa_newsroom_newsletter_subscription();
+      $block['content'] = _nexteuropa_newsroom_screens_newsletter_subscription();
       break;
 
     case 'newsroom_proposal':
       $block['subject'] = t('Newsroom item proposal');
-      $block['content'] = _nexteuropa_newsroom_block_news_proposal();
+      $block['content'] = _nexteuropa_newsroom_screens_block_news_proposal();
       break;
 
     case 'newsroom_agenda_block':
       $block['subject'] = NULL;
-      $block['content'] = _nexteuropa_newsroom_agenda_block();
+      $block['content'] = _nexteuropa_newsroom_screens_agenda_block();
       break;
   }
   return $block;
@@ -81,7 +81,7 @@ function nexteuropa_newsroom_block_view($delta = '') {
  * @return string
  *   Content.
  */
-function _nexteuropa_newsroom_agenda_block() {
+function _nexteuropa_newsroom_screens_agenda_block() {
   $content = '';
   if ($type = _nexteuropa_nexteuropa_get_type_from_agenda_block_context()) {
     $agenda_block = new NewsroomBlockAgenda($type, [], NEXTEUROPA_NEWSROOM_TOPIC_OPERATOR_OR);
@@ -140,7 +140,7 @@ function _nexteuropa_nexteuropa_related_content() {
     $parent_item = NULL;
     if (count($parent_related_items) > 0) {
       $parent_item = $parent_related_items[0];
-      $brother_items = _nexteuropa_newsroom_get_related_children('field_newsroom_parent_content', $parent_item->id, $node->nid);
+      $brother_items = _nexteuropa_newsroom_screens_get_related_children('field_newsroom_parent_content', $parent_item->id, $node->nid);
     }
 
     if ($parent_item || count($brother_items) > 0 || count($children_related_items) > 0) {
@@ -168,7 +168,7 @@ function _nexteuropa_nexteuropa_related_content() {
  * @return array
  *   Taxonomy ids.
  */
-function _nexteuropa_newsroom_get_related_children($field_name, $parent_nid, $current_nid) {
+function _nexteuropa_newsroom_screens_get_related_children($field_name, $parent_nid, $current_nid) {
   $items = [];
   if ($parent_nid) {
     $cache_key = 'node_relative_items';
@@ -242,7 +242,7 @@ function _nexteuropa_nexteuropa_prepare_related_content_array($ids) {
  * @return string
  *   Content.
  */
-function _nexteuropa_newsroom_tools() {
+function _nexteuropa_newsroom_screens_tools() {
   $content = '';
   $newsroom_item = menu_get_object();
   if ($newsroom_item->type == NEXTEUROPA_NEWSROOM_CONTENT_TYPE) {
@@ -288,7 +288,7 @@ function _nexteuropa_newsroom_tools() {
  * @return array
  *   Form array.
  */
-function _nexteuropa_newsroom_newsletter_subscription() {
+function _nexteuropa_newsroom_screens_newsletter_subscription() {
   $content = [];
   if ($view = views_get_view('newsletter_subscription')) {
     $view->set_display('block');
@@ -296,7 +296,7 @@ function _nexteuropa_newsroom_newsletter_subscription() {
     $view->execute();
     if (!empty($view->result)) {
       $service = array_shift($view->result);
-      $content = drupal_get_form('nexteuropa_newsroom_newsletter_subscription_form', [
+      $content = drupal_get_form('nexteuropa_newsroom_screens_newsletter_subscription_form', [
         'tid' => $service->field_field_newsroom_service_id[0]['raw']['safe_value'],
         'name' => $service->taxonomy_term_data_name,
       ]);
@@ -312,7 +312,7 @@ function _nexteuropa_newsroom_newsletter_subscription() {
  * @return string
  *   Block content.
  */
-function _nexteuropa_newsroom_block_news_proposal() {
+function _nexteuropa_newsroom_screens_block_news_proposal() {
 
   if (!user_access(NEXTEUROPA_NEWSROOM_PROPOSAL_ACCESS)) {
     return NULL;

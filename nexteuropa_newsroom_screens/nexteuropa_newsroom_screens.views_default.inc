@@ -2,13 +2,13 @@
 
 /**
  * @file
- * nexteuropa_newsroom.views_default.inc
+ * nexteuropa_newsroom_screens.views_default.inc
  */
 
 /**
  * Implements hook_views_default_views().
  */
-function nexteuropa_newsroom_views_default_views() {
+function nexteuropa_newsroom_screens_views_default_views() {
   $export = array();
 
   $view = new view();

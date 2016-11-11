@@ -1,13 +1,13 @@
 <?php
 /**
  * @file
- * nexteuropa_newsroom.field_group.inc
+ * Nexteuropa_newsroom.field_group.inc.
  */
 
 /**
  * Implements hook_field_group_info().
  */
-function nexteuropa_newsroom_field_group_info() {
+function nexteuropa_newsroom_entities_field_group_info() {
   $field_groups = array();
 
   $field_group = new stdClass();

@@ -2,13 +2,13 @@
 
 /**
  * @file
- * nexteuropa_newsroom.features.field_instance.inc
+ * nexteuropa_newsroom_entities.features.field_instance.inc
  */
 
 /**
  * Implements hook_field_default_field_instances().
  */
-function nexteuropa_newsroom_field_default_field_instances() {
+function nexteuropa_newsroom_entities_field_default_field_instances() {
 
   $field_instances = array();
 

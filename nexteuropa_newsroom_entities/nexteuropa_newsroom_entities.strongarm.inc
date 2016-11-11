@@ -2,13 +2,13 @@
 
 /**
  * @file
- * nexteuropa_newsroom.strongarm.inc
+ * nexteuropa_newsroom_entities.strongarm.inc
  */
 
 /**
  * Implements hook_strongarm().
  */
-function nexteuropa_newsroom_strongarm() {
+function nexteuropa_newsroom_entities_strongarm() {
   $export = array();
 
   $strongarm = new stdClass();

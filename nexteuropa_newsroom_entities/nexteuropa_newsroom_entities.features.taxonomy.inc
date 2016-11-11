@@ -2,13 +2,13 @@
 
 /**
  * @file
- * nexteuropa_newsroom.features.taxonomy.inc
+ * nexteuropa_newsroom_entities.features.taxonomy.inc
  */
 
 /**
  * Implements hook_taxonomy_default_vocabularies().
  */
-function nexteuropa_newsroom_taxonomy_default_vocabularies() {
+function nexteuropa_newsroom_entities_taxonomy_default_vocabularies() {
   return array(
     'newsroom_item_type' => (object) array(
       'name' => 'Newsroom Item Type',

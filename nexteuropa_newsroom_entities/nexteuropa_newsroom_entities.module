@@ -1,0 +1,8 @@
+<?php
+
+/**
+ * @file
+ * Code for the nexteuropa newsroom entities feature - 2.1.
+ */
+
+module_load_include('inc', 'nexteuropa_newsroom_entities', 'nexteuropa_newsroom_entities.features');

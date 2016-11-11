@@ -2,13 +2,13 @@
 
 /**
  * @file
- * nexteuropa_newsroom.context.inc
+ * Nexteuropa_newsroom.context.inc.
  */
 
 /**
  * Implements hook_context_default_contexts().
  */
-function nexteuropa_newsroom_context_default_contexts() {
+function nexteuropa_newsroom_screens_context_default_contexts() {
   $export = array();
 
   $context = new stdClass();
