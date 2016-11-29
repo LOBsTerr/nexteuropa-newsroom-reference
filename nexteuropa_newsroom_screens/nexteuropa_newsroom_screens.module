@@ -1,0 +1,10 @@
+<?php
+
+/**
+ * @file
+ * Code for the nexteuropa newsroom screens feature - 2.2.
+ */
+
+
+module_load_include('inc', 'nexteuropa_newsroom_screens', 'nexteuropa_newsroom.blocks');
+module_load_include('inc', 'nexteuropa_newsroom_screens', 'nexteuropa_newsroom.menu');

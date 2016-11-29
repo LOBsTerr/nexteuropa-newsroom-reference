@@ -2,13 +2,13 @@
 
 /**
  * @file
- * nexteuropa_newsroom.context.inc
+ * nexteuropa_newsroom_screens.context.inc
  */
 
 /**
  * Implements hook_context_default_contexts().
  */
-function nexteuropa_newsroom_context_default_contexts() {
+function nexteuropa_newsroom_screens_context_default_contexts() {
   $export = array();
 
   $context = new stdClass();
@@ -31,13 +31,13 @@ function nexteuropa_newsroom_context_default_contexts() {
     'block' => array(
       'blocks' => array(
         'nexteuropa_newsroom-newsroom_related_content' => array(
-          'module' => 'nexteuropa_newsroom',
+          'module' => 'nexteuropa_newsroom_screens',
           'delta' => 'newsroom_related_content',
           'region' => 'content',
           'weight' => '48',
         ),
         'nexteuropa_newsroom-newsroom_admin_tools' => array(
-          'module' => 'nexteuropa_newsroom',
+          'module' => 'nexteuropa_newsroom_screens',
           'delta' => 'newsroom_admin_tools',
           'region' => 'content',
           'weight' => '49',

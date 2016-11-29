@@ -2,13 +2,13 @@
 
 /**
  * @file
- * nexteuropa_newsroom_screens.features.user_permission.inc
+ * nexteuropa_newsroom_entities.features.user_permission.inc
  */
 
 /**
  * Implements hook_user_default_permissions().
  */
-function nexteuropa_newsroom_screens_user_default_permissions() {
+function nexteuropa_newsroom_entities_user_default_permissions() {
   $permissions = array();
 
   // Exported permission: 'create newsroom_item content'.

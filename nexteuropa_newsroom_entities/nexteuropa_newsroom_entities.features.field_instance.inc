@@ -2,13 +2,13 @@
 
 /**
  * @file
- * nexteuropa_newsroom.features.field_instance.inc
+ * nexteuropa_newsroom_entities.features.field_instance.inc
  */
 
 /**
  * Implements hook_field_default_field_instances().
  */
-function nexteuropa_newsroom_field_default_field_instances() {
+function nexteuropa_newsroom_entities_field_default_field_instances() {
 
   $field_instances = array();
 
@@ -302,7 +302,7 @@ function nexteuropa_newsroom_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'hidden',
-        'module' => 'nexteuropa_newsroom',
+        'module' => 'nexteuropa_newsroom_entities',
         'settings' => array(
           'display_caption' => '',
           'display_copyright' => 1,
@@ -315,7 +315,7 @@ function nexteuropa_newsroom_field_default_field_instances() {
       ),
       'newsroom_event' => array(
         'label' => 'hidden',
-        'module' => 'nexteuropa_newsroom',
+        'module' => 'nexteuropa_newsroom_entities',
         'settings' => array(
           'display_caption' => '',
           'display_copyright' => '',
@@ -385,7 +385,7 @@ function nexteuropa_newsroom_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'hidden',
-        'module' => 'nexteuropa_newsroom',
+        'module' => 'nexteuropa_newsroom_entities',
         'settings' => array(
           'display_caption' => '',
           'display_copyright' => 1,
@@ -398,7 +398,7 @@ function nexteuropa_newsroom_field_default_field_instances() {
       ),
       'newsroom_event' => array(
         'label' => 'hidden',
-        'module' => 'nexteuropa_newsroom',
+        'module' => 'nexteuropa_newsroom_entities',
         'settings' => array(
           'display_caption' => '',
           'display_copyright' => '',
@@ -581,7 +581,7 @@ function nexteuropa_newsroom_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'nexteuropa_newsroom',
+        'module' => 'nexteuropa_newsroom_entities',
         'settings' => array(
           'display_type' => 'default',
         ),
