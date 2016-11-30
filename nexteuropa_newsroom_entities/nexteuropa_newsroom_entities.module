@@ -1,0 +1,60 @@
+<?php
+
+/**
+ * @file
+ * Code for the nexteuropa newsroom entities feature - 2.2.
+ */
+
+include_once 'nexteuropa_newsroom_entities.features.inc';
+
+/**
+ * Implements hook_image_default_styles().
+ */
+function nexteuropa_newsroom_entities_image_default_styles() {
+  // Exported image style: newsroom_style.
+  $styles['newsroom_style'] = [
+    'name' => 'newsroom_style',
+    'label' => 'newsroom_style',
+    'effects' => [
+      1 => [
+        'label' => 'Scale',
+        'help' => 'Scaling will maintain the aspect-ratio of the original image. If only a single dimension is specified, the other dimension will be calculated.',
+        'effect callback' => 'image_scale_effect',
+        'dimensions callback' => 'image_scale_dimensions',
+        'form callback' => 'image_scale_form',
+        'summary theme' => 'image_scale_summary',
+        'module' => 'image',
+        'name' => 'image_scale',
+        'data' => [
+          'width' => 250,
+          'height' => '',
+          'upscale' => 1,
+        ],
+        'weight' => 1,
+      ],
+    ],
+  ];
+  return $styles;
+}
+
+/**
+ * Implements hook_post_features_enable_feature().
+ */
+function nexteuropa_newsroom_entities_post_features_enable_feature($component) {
+  switch ($component) {
+    case 'taxonomy':
+      // Set translation mode for the vocabularies.
+      $importer_id = [
+        'topics' => NEXTEUROPA_NEWSROOM_TOPIC_VOCABULARY,
+        'services' => NEXTEUROPA_NEWSROOM_SERVICE_VOCABULARY,
+        'types' => NEXTEUROPA_NEWSROOM_TYPE_VOCABULARY,
+      ];
+
+      foreach ($importer_id as $key => $importer) {
+        if (!field_info_instance('taxonomy_term', 'name_field', $importer)) {
+          title_field_replacement_toggle('taxonomy_term', $importer, 'name');
+        }
+      }
+      break;
+  }
+}
