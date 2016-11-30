@@ -302,7 +302,7 @@ function nexteuropa_newsroom_entities_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'hidden',
-        'module' => 'nexteuropa_newsroom_entities',
+        'module' => 'nexteuropa_newsroom',
         'settings' => array(
           'display_caption' => '',
           'display_copyright' => 1,
@@ -315,7 +315,7 @@ function nexteuropa_newsroom_entities_field_default_field_instances() {
       ),
       'newsroom_event' => array(
         'label' => 'hidden',
-        'module' => 'nexteuropa_newsroom_entities',
+        'module' => 'nexteuropa_newsroom',
         'settings' => array(
           'display_caption' => '',
           'display_copyright' => '',
@@ -385,7 +385,7 @@ function nexteuropa_newsroom_entities_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'hidden',
-        'module' => 'nexteuropa_newsroom_entities',
+        'module' => 'nexteuropa_newsroom',
         'settings' => array(
           'display_caption' => '',
           'display_copyright' => 1,
@@ -398,7 +398,7 @@ function nexteuropa_newsroom_entities_field_default_field_instances() {
       ),
       'newsroom_event' => array(
         'label' => 'hidden',
-        'module' => 'nexteuropa_newsroom_entities',
+        'module' => 'nexteuropa_newsroom',
         'settings' => array(
           'display_caption' => '',
           'display_copyright' => '',
@@ -581,9 +581,11 @@ function nexteuropa_newsroom_entities_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'nexteuropa_newsroom_entities',
+        'module' => 'nexteuropa_newsroom',
         'settings' => array(
           'display_type' => 'default',
+          'width' => field_info_instance('node', 'field_newsroom_docsroom_ids', 'newsroom_item')['display']['default']['settings']['width'],
+          'height' => field_info_instance('node', 'field_newsroom_docsroom_ids', 'newsroom_item')['display']['default']['settings']['height'],
         ),
         'type' => 'newsroom_docsroom',
         'weight' => 11,
