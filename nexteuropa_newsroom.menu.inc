@@ -38,22 +38,6 @@ function nexteuropa_newsroom_menu() {
     'page arguments' => ['nexteuropa_newsroom_newsroom_proposal_form'],
     'access arguments' => [NEXTEUROPA_NEWSROOM_PROPOSAL_ACCESS],
   ];
-  $items['newsroom-agenda'] = [
-    'title' => 'Newsroom Agenda',
-    'description' => 'Displays Newsroom items as Agenda',
-    'page callback' => '_nexteuropa_newsroom_agenda',
-    'access arguments' => ['access content'],
-    'type' => MENU_CALLBACK,
-    'file' => 'nexteuropa_newsroom.pages.inc',
-  ];
-  $items['newsletters-list'] = [
-    'title' => 'Newsletters',
-    'description' => 'Newsletters service list',
-    'page callback' => '_nexteuropa_newsroom_newsletters_page',
-    'access arguments' => ['access content'],
-    'type' => MENU_CALLBACK,
-    'file' => 'nexteuropa_newsroom.pages.inc',
-  ];
   $items['newsroom-redirect'] = [
     'title' => 'Newsroom item redirect',
     'page callback' => '_nexteuropa_newsroom_redirect',

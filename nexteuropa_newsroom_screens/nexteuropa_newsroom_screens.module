@@ -7,4 +7,41 @@
 
 include_once 'nexteuropa_newsroom_screens.features.inc';
 module_load_include('inc', 'nexteuropa_newsroom_screens', 'nexteuropa_newsroom_screens.blocks');
-module_load_include('inc', 'nexteuropa_newsroom_screens', 'nexteuropa_newsroom_screens.menu');
+module_load_include('inc', 'nexteuropa_newsroom', 'nexteuropa_newsroom_screens.pages');
+
+/**
+ * Implements hook_menu().
+ */
+function nexteuropa_newsroom_screens_menu() {
+  $items['newsroom'] = [
+    'page callback' => '_nexteuropa_newsroom_newsroom_page',
+    'access arguments' => ['access content'],
+    'type' => MENU_CALLBACK,
+    'file' => 'nexteuropa_newsroom_screens.pages.inc',
+  ];
+  $items['newsroom-rss'] = [
+    'title' => 'Newsroom RSS feed',
+    'description' => 'Newsroom RSS feed',
+    'page callback' => '_nexteuropa_newsroom_newsroom_rss',
+    'access arguments' => ['access content'],
+    'type' => MENU_CALLBACK,
+    'file' => 'nexteuropa_newsroom_screens.pages.inc',
+  ];
+  $items['newsroom-agenda'] = [
+    'title' => 'Newsroom Agenda',
+    'description' => 'Displays Newsroom items as Agenda',
+    'page callback' => '_nexteuropa_newsroom_agenda',
+    'access arguments' => ['access content'],
+    'type' => MENU_CALLBACK,
+    'file' => 'nexteuropa_newsroom_scerens.pages.inc',
+  ];
+  $items['newsletters-list'] = [
+    'title' => 'Newsletters',
+    'description' => 'Newsletters service list',
+    'page callback' => '_nexteuropa_newsroom_newsletters_page',
+    'access arguments' => ['access content'],
+    'type' => MENU_CALLBACK,
+    'file' => 'nexteuropa_newsroom_screens.pages.inc',
+  ];
+}
+

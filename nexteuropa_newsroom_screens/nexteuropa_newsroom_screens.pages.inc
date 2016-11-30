@@ -46,6 +46,7 @@ function _nexteuropa_newsroom_agenda($view = NewsroomAgenda::AGENDA_VIEW_SCHEDUL
  *   Newsroom page content,
  */
 function _nexteuropa_newsroom_newsroom_page($type_url = NULL, $topic_url = NULL, $start_date = NULL, $end_date = NULL, $ec_content = NEXTEUROPA_NEWSROOM_EC) {
+  kpr('ciao');
   $newsroom_page = NewsroomBuilder::buildNewsroomPage($type_url, $topic_url, $start_date, $end_date, $ec_content);
   $output = $newsroom_page->getContent();
   $output .= theme('pager');
