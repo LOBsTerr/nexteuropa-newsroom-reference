@@ -33,7 +33,7 @@ function nexteuropa_newsroom_screens_menu() {
     'page callback' => '_nexteuropa_newsroom_agenda',
     'access arguments' => ['access content'],
     'type' => MENU_CALLBACK,
-    'file' => 'nexteuropa_newsroom_scerens.pages.inc',
+    'file' => 'nexteuropa_newsroom_screens.pages.inc',
   ];
   $items['newsletters-list'] = [
     'title' => 'Newsletters',
@@ -43,5 +43,6 @@ function nexteuropa_newsroom_screens_menu() {
     'type' => MENU_CALLBACK,
     'file' => 'nexteuropa_newsroom_screens.pages.inc',
   ];
-}
 
+  return $items;
+}

@@ -25,7 +25,7 @@
  *   Agenda content,
  */
 function _nexteuropa_newsroom_agenda($view = NewsroomAgenda::AGENDA_VIEW_SCHEDULE, $type = NULL, $topic = NULL, $arg1 = NULL, $arg2 = NULL, $arg3 = NULL) {
-  return NewsroomBuilder::buildPageAgenda($view, $type, $topic, $arg1, $arg2, $arg3)->getAgenda();
+  return NewsroomPageBuilder::buildPageAgenda($view, $type, $topic, $arg1, $arg2, $arg3)->getAgenda();
 }
 
 /**
@@ -43,11 +43,10 @@ function _nexteuropa_newsroom_agenda($view = NewsroomAgenda::AGENDA_VIEW_SCHEDUL
  *   EC content.
  *
  * @return string
- *   Newsroom page content,
+ *   Newsroom page content.
  */
 function _nexteuropa_newsroom_newsroom_page($type_url = NULL, $topic_url = NULL, $start_date = NULL, $end_date = NULL, $ec_content = NEXTEUROPA_NEWSROOM_EC) {
-  kpr('ciao');
-  $newsroom_page = NewsroomBuilder::buildNewsroomPage($type_url, $topic_url, $start_date, $end_date, $ec_content);
+  $newsroom_page = NewsroomPageBuilder::buildNewsroomPage($type_url, $topic_url, $start_date, $end_date, $ec_content);
   $output = $newsroom_page->getContent();
   $output .= theme('pager');
   $build['#markup'] = $output;
@@ -63,7 +62,7 @@ function _nexteuropa_newsroom_newsroom_page($type_url = NULL, $topic_url = NULL,
  *   Topic url part.
  */
 function _nexteuropa_newsroom_newsroom_rss($type_url = NULL, $topic_url = NULL) {
-  $newsroom_page = NewsroomBuilder::buildNewsroomPage($type_url, $topic_url);
+  $newsroom_page = NewsroomPageBuilder::buildNewsroomPage($type_url, $topic_url);
   drupal_add_http_header('Content-Type', 'application/rss+xml; charset=utf-8');
   echo $newsroom_page->getRssContent();
   module_invoke_all('exit');
