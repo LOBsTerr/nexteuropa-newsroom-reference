@@ -501,7 +501,7 @@ function _nexteuropa_newsroom_admin_settings_form_submit($form, &$form_state) {
   $patterns ? variable_set('newsroom_patterns', 1) : variable_set('newsroom_patterns', 0);
 
   $additional = [
-    'newsroom_use_newsroom_entities' => 'nexteuropa_newsroom_entities', 
+    'newsroom_use_newsroom_entities' => 'nexteuropa_newsroom_entities',
     'newsroom_use_newsroom_screens' => 'nexteuropa_newsroom_screens',
   ];
 
