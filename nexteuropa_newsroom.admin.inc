@@ -75,6 +75,25 @@ function nexteuropa_newsroom_admin_settings($form, &$form_state) {
     '#element_validate' => ['_nexteuropa_newsroom_admin_subsite_validate'],
   ];
 
+  $form['newsroom_others']['newsroom_use_newsroom_entities'] = array(
+    '#type' => 'checkbox',
+    '#disabled' => TRUE,
+    '#title' => t('Use the entities bundled with this feature'),
+    '#default_value' => variable_get('newsroom_use_newsroom_entities', 1),
+  );
+
+  $form['newsroom_others']['newsroom_use_newsroom_screens'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Use the views and the context bundled with this feature'),
+    '#default_value' => variable_get('newsroom_use_newsroom_screens', 1),
+    '#disabled' => TRUE,
+    '#states' => array(
+      'visible' => array(
+        ':input[name="newsroom_use_newsroom_entities"]' => array('checked' => TRUE),
+      ),
+    ),
+  );
+
   $form['newsroom_others']['newsroom_use_css'] = [
     '#type' => 'checkbox',
     '#title' => t('Use the stylesheets provided by this feature'),
@@ -480,6 +499,34 @@ function _nexteuropa_newsroom_admin_settings_form_submit($form, &$form_state) {
   }
 
   $patterns ? variable_set('newsroom_patterns', 1) : variable_set('newsroom_patterns', 0);
+
+  $additional = [
+    'newsroom_use_newsroom_entities' => 'nexteuropa_newsroom_entities', 
+    'newsroom_use_newsroom_screens' => 'nexteuropa_newsroom_screens',
+  ];
+
+  foreach ($additional as $variable => $feature) {
+    if (variable_get($variable, 0) && !$form_state['values'][$variable]) {
+      module_disable([$feature]);
+      if ($feature == 'newsroom_use_newsroom_entities') {
+        variable_set('nexteuropa_newsroom_screens', 0);
+      }
+      if ($disabled = drupal_uninstall_modules([$feature])) {
+        drupal_set_message(t('The @feature feature has been uninstalled and it is not anymore active on your site!', ['@feature' => $feature]), 'status');
+      }
+      else {
+        drupal_set_message(t('The @feature feature could not be uninstalled.', ['@feature' => $feature]), 'warning');
+      }
+    }
+    elseif (!variable_get($variable, 0) && $form_state['values'][$variable]) {
+      if ($enabled = module_enable([$feature])) {
+        drupal_set_message(t('The @feature feature has been installed and it is active on your site!', ['@feature' => $feature]), 'status');
+      }
+      else {
+        drupal_set_message(t('The @feature feature could not be installed.', ['@feature' => $feature]), 'warning');
+      }
+    }
+  }
 
   // If the validation returns the confirm request.
   if (!empty($form_state['storage']['confirm']) && empty($form_state['confirm']['processed'])) {

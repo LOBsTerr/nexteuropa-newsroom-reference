@@ -137,8 +137,7 @@
   position: relative;
 }
 
-.newsroom-item__type a:link,
-.newsroom-item__type a:visited,
+.newsroom-item__type a:link, .newsroom-item__type a:visited,
 .sample a:link,
 .sample a:visited {
   color: #fff;
