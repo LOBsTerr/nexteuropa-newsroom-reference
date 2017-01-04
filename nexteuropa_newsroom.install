@@ -467,6 +467,31 @@ function nexteuropa_newsroom_update_7112() {
   variable_set('newsroom_single_item_import_segment', NEXTEUROPA_NEWSROOM_ITEM_SEGMENT);
 }
 
+/**
+ * Enable the additional features for the existing installations.
+ */
+function nexteuropa_newsroom_update_7113() {
+  $modules = ['nexteuropa_newsroom_entities', 'nexteuropa_newsroom_screens'];
+  module_enable($modules);
+  $bundles = [
+    'newsroom_item', 
+    'newsroom_selection', 
+    'newsroom_newsletter_issue',
+  ];
+
+  // Disabling the teaser view mode in the newsroom ct.
+  foreach ($bundles as $bundle) {
+    $settings = field_bundle_settings('node', $bundle);
+    $settings['view_modes']['mini_teaser']['custom_settings'] = FALSE;
+    $settings['view_modes']['embedded']['custom_settings'] = FALSE;
+    field_bundle_settings('node', $bundle, $settings);
+  }
+
+  // Remove a leftover field.
+  if (field_info_field('field_selected_topic_highlights')) {
+    field_delete_field('field_selected_topic_highlights');
+  }
+}
 
 /**
  * Renames and migrates the data to a new field.

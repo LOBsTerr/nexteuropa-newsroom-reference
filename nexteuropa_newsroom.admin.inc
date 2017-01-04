@@ -86,7 +86,6 @@ function nexteuropa_newsroom_admin_settings($form, &$form_state) {
     '#type' => 'checkbox',
     '#title' => t('Use the views and the context bundled with this feature'),
     '#default_value' => variable_get('newsroom_use_newsroom_screens', 1),
-    '#disabled' => TRUE,
     '#states' => array(
       'visible' => array(
         ':input[name="newsroom_use_newsroom_entities"]' => array('checked' => TRUE),

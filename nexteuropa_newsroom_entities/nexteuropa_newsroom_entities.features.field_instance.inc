@@ -3801,12 +3801,6 @@ function nexteuropa_newsroom_entities_field_default_field_instances() {
         'type' => 'list_default',
         'weight' => 8,
       ),
-      'mini_teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
     ),
     'entity_type' => 'taxonomy_term',
     'field_name' => 'field_newsroom_mailing_exists',
